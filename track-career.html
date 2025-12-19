@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Transition Tracker - Project Coordinator/Operations/Data Analyst</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .week-section {
+            margin-bottom: 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .week-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .week-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+        }
+
+        .week-header h2 {
+            font-size: 1.5em;
+        }
+
+        .week-progress {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .week-content {
+            padding: 20px;
+            background: #fafafa;
+        }
+
+        .day-section {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .day-header {
+            font-size: 1.2em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .task-item:hover {
+            background: #e9ecef;
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+            background: #d4edda;
+        }
+
+        .task-checkbox {
+            margin-right: 15px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .task-text {
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .task-duration {
+            color: #666;
+            font-size: 0.85em;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .phase-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+        }
+
+        .reset-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: #c82333;
+        }
+
+        .export-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+
+        .export-btn:hover {
+            background: #218838;
+        }
+
+        .motivational-quote {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        .resource-links {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .resource-links h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .resource-links a {
+            display: block;
+            color: #1976d2;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: all 0.3s;
+        }
+
+        .resource-links a:hover {
+            color: #667eea;
+            padding-left: 10px;
+        }
+
+        .notes-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 10px;
+        }
+
+        .notes-section h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .notes-section textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Career Transition Tracker</h1>
+            <p>From Interpreter to Project Coordinator / Operations / Data Analyst</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalProgress">0%</div>
+                <div class="stat-label">Overall Progress</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="tasksCompleted">0</div>
+                <div class="stat-label">Tasks Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="hoursInvested">0</div>
+                <div class="stat-label">Hours Invested</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="daysActive">0</div>
+                <div class="stat-label">Days Active</div>
+            </div>
+        </div>
+
+        <div class="motivational-quote">
+            "You're not changing careers—you're finally aligning your work with who you actually are. Every hour you invest today is an hour less you'll spend drained by work that doesn't fit."
+        </div>
+
+        <div class="content">
+            <!-- WEEKS 1-2: PROJECT MANAGEMENT FOUNDATIONS -->
+            <div class="week-section" data-week="1-2">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <div>
+                        <h2>📋 Weeks 1-2: Project Management Foundations</h2>
+                        <p>Goal: Learn the language and basics of project coordination</p>
+                    </div>
+                    <div class="week-progress">0% Complete</div>
+                </div>
+                <div class="week-content">
+                    <div class="day-section">
+                        <div class="phase-badge">Days 1-3: Core Concepts</div>
+                        <div class="day-header">Understanding Project Management Basics</div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="180">
+                            <div class="task-text">Watch "Project Management Simplified" by Adriana Girdler on YouTube (complete series)</div>
+                            <div class="task-duration">3 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Create a study document: Define scope, timeline, milestones, deliverables, stakeholders, dependencies, risk management</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Research and write notes on Agile vs Waterfall methodologies</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class="phase-badge">Days 4-10: Getting Certified</div>
+                        <div class="day-header">Google Project Management Certificate</div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Enroll in Google Project Management Professional Certificate on Coursera (apply for financial aid or start free trial)</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="360">
+                            <div class="task-text">Complete Course 1: "Foundations of Project Management"</div>
+                            <div class="task-duration">6 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="360">
+                            <div class="task-text">Complete Course 2: "Project Initiation: Starting a Successful Project"</div>
+                            <div class="task-duration">6 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Take notes on key learnings and create a one-page summary of project management principles</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class="phase-badge">Days 11-14: Hands-On Tool Practice</div>
+                        <div class="day-header">Master Project Management Tools</div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Create free accounts: Asana, Trello, Monday.com (14-day trial)</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Watch Asana tutorial for beginners and explore the interface</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="180">
+                            <div class="task-text">PORTFOLIO PROJECT: Create a complete project plan in Asana (e.g., organizing a conference, product launch, or moving to a new city)</div>
+                            <div class="task-duration">3 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="90">
+                            <div class="task-text">Break project into phases, create tasks with deadlines, assign priorities, add dependencies</div>
+                            <div class="task-duration">1.5 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Take screenshots of your project for portfolio, write a brief description of your planning process</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Repeat the exercise in Trello to understand different tool approaches</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEKS 3-4: DATA SKILLS & TOOLS -->
+            <div class="week-section" data-week="3-4">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <div>
+                        <h2>📊 Weeks 3-4: Data Skills & Tools</h2>
+                        <p>Goal: Get comfortable with spreadsheets and basic data analysis</p>
+                    </div>
+                    <div class="week-progress">0% Complete</div>
+                </div>
+                <div class="week-content">
+                    <div class="day-section">
+                        <div class="phase-badge">Days 15-21: Excel/Google Sheets Mastery</div>
+                        <div class="day-header">Spreadsheet Power Skills</div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="180">
+                            <div class="task-text">Watch "Excel for Beginners" by Leila Gharani on YouTube (complete beginner playlist)</div>
+                            <div class="task-duration">3 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="120">
+                            <div class="task-text">Practice formulas: SUM, AVERAGE, IF, COUNTIF with sample data</div>
+                            <div class="task-duration">2 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="90">
+                            <div class="task-text">Learn and practice VLOOKUP with multiple examples</div>
+                            <div class="task-duration">1.5 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="120">
+                            <div class="task-text">Master pivot tables: Create at least 3 different pivot tables from sample data</div>
+                            <div class="task-duration">2 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="90">
+                            <div class="task-text">Practice data sorting, filtering, and conditional formatting</div>
+                            <div class="task-duration">1.5 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="90">
+                            <div class="task-text">Learn to create charts and graphs (bar, line, pie, scatter plots)</div>
+                            <div class="task-duration">1.5 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="240">
+                            <div class="task-text">PORTFOLIO PROJECT: Find a dataset on Kaggle (beginner-friendly), clean it, analyze it, create 5 visualizations</div>
+                            <div class="task-duration">4 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Write a one-page analysis summary with key insights from your data project</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class="phase-badge">Days 22-28: Advanced Tools</div>
+                        <div class="day-header">Notion and SQL Basics</div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Create a free Notion account and watch "Notion for Beginners" tutorial</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="120">
+                            <div class="task-text">Build a personal organization system in Notion (task tracker, notes, resources)</div>
+                            <div class="task-duration">2 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="90">
+                            <div class="task-text">Create a project tracker template in Notion that you can show in interviews</div>
+                            <div class="task-duration">1.5 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="240">
+                            <div class="task-text">Complete "Intro to SQL" on Khan Academy or Codecademy (SELECT, WHERE, ORDER BY, basic JOINs)</div>
+                            <div class="task-duration">4 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="120">
+                            <div class="task-text">Practice SQL queries with sample databases (at least 20 different queries)</div>
+                            <div class="task-duration">2 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Document your SQL learning: create a cheat sheet of common queries</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEKS 5-6: OPERATIONS & PORTFOLIO -->
+            <div class="week-section" data-week="5-6">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <div>
+                        <h2>⚙️ Weeks 5-6: Operations & Portfolio Building</h2>
+                        <p>Goal: Develop operations thinking and create your portfolio</p>
+                    </div>
+                    <div class="week-progress">0% Complete</div>
+                </div>
+                <div class="week-content">
+                    <div class="day-section">
+                        <div class="phase-badge">Days 29-35: Operations Thinking</div>
+                        <div class="day-header">Process Improvement & Systems</div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="180">
+                            <div class="task-text">Read "The Checklist Manifesto" by Atul Gawande or watch detailed summary videos</div>
+                            <div class="task-duration">3 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="90">
+                            <div class="task-text">Watch YouTube videos on "process mapping" and "standard operating procedures"</div>
+                            <div class="task-duration">1.5 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Learn flowchart basics using Lucidchart or Google Drawings (free tools)</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="180">
+                            <div class="task-text">PORTFOLIO PROJECT: Document a current process (from your interpreter job or daily life) step-by-step</div>
+                            <div class="task-duration">3 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="120">
+                            <div class="task-text">Identify 3-5 inefficiencies in the process and propose specific improvements</div>
+                            <div class="task-duration">2 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="90">
+                            <div class="task-text">Create a visual flowchart showing before and after the improvements</div>
+                            <div class="task-duration">1.5 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Write an executive summary explaining the problem, solution, and expected impact</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class="phase-badge">Days 36-42: Portfolio Website</div>
+                        <div class="day-header">Showcase Your Skills</div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Decide on portfolio platform: Notion (easiest), Google Sites, or LinkedIn Featured Section</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="120">
+                            <div class="task-text">Write your professional introduction (2-3 paragraphs about your transition and strengths)</div>
+                            <div class="task-duration">2 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="180">
+                            <div class="task-text">Upload and format Project 1: Asana/Trello project plan with screenshots and description</div>
+                            <div class="task-duration">3 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="180">
+                            <div class="task-text">Upload and format Project 2: Data analysis spreadsheet with insights and visualizations</div>
+                            <div class="task-duration">3 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="180">
+                            <div class="task-text">Upload and format Project 3: Process improvement document with flowcharts</div>
+                            <div class="task-duration">3 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Create a comprehensive skills list with proficiency levels (Asana, Excel, SQL, etc.)</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Add contact information and links to LinkedIn profile</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Test all links and ensure portfolio displays correctly on mobile and desktop</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 7+: JOB SEARCH -->
+            <div class="week-section" data-week="7+">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <div>
+                        <h2>🎯 Week 7+: Job Search & Applications</h2>
+                        <p>Goal: Land your first interview and job offer</p>
+                    </div>
+                    <div class="week-progress">0% Complete</div>
+                </div>
+                <div class="week-content">
+                    <div class="day-section">
+                        <div class="phase-badge">Resume & LinkedIn</div>
+                        <div class="day-header">Professional Presence</div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="180">
+                            <div class="task-text">Rewrite resume highlighting organizational skills, bilingual abilities, and new technical skills</div>
+                            <div class="task-duration">3 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="120">
+                            <div class="task-text">Reframe interpreter experience: "Managed high-volume workflow, coordinated between parties, maintained documentation"</div>
+                            <div class="task-duration">2 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Add skills section: Bilingual (English/Mandarin), Project Coordination, Asana, Excel, SQL, Data Analysis</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="120">
+                            <div class="task-text">Update LinkedIn profile with new headline, summary, skills, and portfolio projects</div>
+                            <div class="task-duration">2 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Turn on "Open to Work" on LinkedIn (visible to recruiters only)</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Add portfolio link to resume and LinkedIn</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class="phase-badge">Job Search Setup</div>
+                        <div class="day-header">Finding Opportunities</div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="60">
+                            <div class="task-text">Create accounts on: Remote.co, We Work Remotely, FlexJobs, Remote OK, Working Nomads</div>
+                            <div class="task-duration">1 hour</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="30">
+                            <div class="task-text">Set up job alerts on Indeed and LinkedIn for "Remote Project Coordinator" and related titles</div>
+                            <div class="task-duration">30 min</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="90">
+                            <div class="task-text">Create profiles on Upwork and Fiverr as backup freelance options</div>
+                            <div class="task-duration">1.5 hours</div>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" data-duration="120">
+                            <div class="task-text">Research 20 companies that hire remote coordinators/analysts and save their career pages</div>
+                            <div class="task-duration">2 hours</div>
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class
